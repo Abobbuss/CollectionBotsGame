@@ -29,7 +29,7 @@ public class Unit : MonoBehaviour
     public void HasTarge(Resource resource)
     {
         _currentResource = resource;
-        _machineState.SetState(new MovingToResourceState(this, resource));
+        _machineState.SetState(new MoveToResourceState(this, resource));
     }
 
     private void Update()

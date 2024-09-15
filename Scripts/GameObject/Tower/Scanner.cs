@@ -19,20 +19,16 @@ public class Scanner : MonoBehaviour
         StartCoroutine(ScanForResources());
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.TryGetComponent(out Resource resource))
-            _findedResources.Add(resource);
-    }
-
     private IEnumerator ScanForResources()
     {
         while (true)
         {
-            while (transform.localScale.x < _maxRadius)
+            float currentRadius = 0f;
+
+            while (currentRadius < _maxRadius)
             {
-                float growing = _speed * Time.deltaTime;
-                transform.localScale += new Vector3(growing, growing, growing);
+                currentRadius += _speed * Time.deltaTime;
+                DetectResources(currentRadius);
 
                 yield return null;
             }
@@ -44,11 +40,23 @@ public class Scanner : MonoBehaviour
         }
     }
 
-    private IEnumerator ResetScanner()
+    private void DetectResources(float radius)
     {
         _findedResources.Clear();
-        transform.localScale = Vector3.zero;
+        Collider[] hitColliders = Physics.OverlapSphere(transform.position, radius);
 
-        yield return new WaitForSeconds(_resetDelay);
+        foreach (var hitCollider in hitColliders)
+        {
+            if (hitCollider.TryGetComponent(out Resource resource))
+                _findedResources.Add(resource);
+        }
+    }
+
+    private IEnumerator ResetScanner()
+    {
+        transform.localScale = Vector3.zero;
+        var delay = new WaitForSeconds(_resetDelay);
+
+        yield return delay;
     }
 }

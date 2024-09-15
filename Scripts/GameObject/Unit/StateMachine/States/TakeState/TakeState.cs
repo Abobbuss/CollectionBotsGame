@@ -23,6 +23,6 @@ public class TakeState : IUnitState
 
     public void UpdateState()
     {
-        _unit.SetState(new MovingToTowerState(_unit, _unit.Tower));
+        _unit.SetState(new MoveToTowerState(_unit, _unit.Tower));
     }
 }

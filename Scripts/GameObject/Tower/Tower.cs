@@ -11,7 +11,6 @@ public class Tower : MonoBehaviour
     private List<Resource> _findedResources;
     private List<Resource> _deliverdResources;
 
-    public event UnityAction<int> ChangedCountFindedResources;
     public event UnityAction<int> ChangedCountDiscoverdResources;
 
     private void Start()
@@ -22,11 +21,12 @@ public class Tower : MonoBehaviour
 
     private void OnEnable()
     {
-        _scanner.Finded += FindedResource;
+        _scanner.Finded += OnFindResource;
     }
+
     private void OnDisable()
     {
-        _scanner.Finded -= FindedResource;
+        _scanner.Finded -= OnFindResource;
     }
 
     public void DelivereResource(Resource resource)
@@ -36,21 +36,27 @@ public class Tower : MonoBehaviour
         resource.Release();
     }
 
-    private void FindedResource(List<Resource> resources)
+    private void OnFindResource(List<Resource> resources)
     {
         foreach (Resource resource in resources)
         {
             _findedResources.Add(resource);
-            AssignUnitToResource(resource);
         }
 
-        ChangedCountFindedResources?.Invoke(_findedResources.Count);
+        AssignUnitToResource();
     }
-    private void AssignUnitToResource(Resource resource)
-    {
-        Unit freeUnit = _units.FirstOrDefault(unit => unit.IsFree);
 
-        if (freeUnit != null)
+    private void AssignUnitToResource()
+    {
+        foreach (Resource resource in _findedResources.ToList())
+        {
+            Unit freeUnit = _units.FirstOrDefault(unit => unit.IsFree);
+
+            if (freeUnit == null)
+                break;
+
             freeUnit.HasTarge(resource);
+            _findedResources.Remove(resource); 
+        }
     }
 }

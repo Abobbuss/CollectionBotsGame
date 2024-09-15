@@ -1,13 +1,13 @@
 using UnityEngine;
 
-public class MovingBase
+public class MoverBase
 {
     [SerializeField] private float _speed = 1.5f;
 
     private Unit _unit;
     private Vector3 _targetPosition;
 
-    public MovingBase(Unit unit, Vector3 target) 
+    public MoverBase(Unit unit, Vector3 target) 
     { 
         _unit = unit;
         _targetPosition = target;

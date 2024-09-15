@@ -1,12 +1,12 @@
 using UnityEngine;
 
-public class MovingToTowerState : IUnitState
+public class MoveToTowerState : IUnitState
 {
     private Unit _unit;
     private Tower _tower;
     private float _distance = 0.55f;
 
-    public MovingToTowerState(Unit unit, Tower tower)
+    public MoveToTowerState(Unit unit, Tower tower)
     {
         _unit = unit;
         _tower = tower;
@@ -22,12 +22,12 @@ public class MovingToTowerState : IUnitState
 
     public void UpdateState()
     {
-        MovingBase move = new MovingBase(_unit, _tower.transform.position);
+        MoverBase move = new MoverBase(_unit, _tower.transform.position);
         move.Update();
 
         if (Vector3.Distance(_unit.transform.position, _tower.transform.position) < _distance)
         {
-            _unit.SetState(new WaitingState());
+            _unit.SetState(new WaiteState());
         }
     }
 }

@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.Pool;
 
 public class ResourceGenerator : MonoBehaviour
@@ -8,7 +9,7 @@ public class ResourceGenerator : MonoBehaviour
     [SerializeField] private Collider _zoneSpawn;
 
     private ObjectPool<Resource> _pool;
-    private float _timeCreate = 3.5f;
+    private float _timeCreate = 1.5f;
 
     private void Awake()
     {
@@ -22,7 +23,7 @@ public class ResourceGenerator : MonoBehaviour
 
     private void Start()
     {
-        StartCoroutine(StartPool());
+        StartCoroutine(StartGenerate());
     }
 
     public void OnRelease(Resource resource)
@@ -31,7 +32,7 @@ public class ResourceGenerator : MonoBehaviour
         resource.gameObject.SetActive(false);
     }
 
-    private IEnumerator StartPool()
+    private IEnumerator StartGenerate()
     {
         var waitTime = new WaitForSeconds(_timeCreate);
 
@@ -61,9 +62,16 @@ public class ResourceGenerator : MonoBehaviour
 
     private void OnGet(Resource resource)
     {
+        resource.Delivered += Deliverd;
         resource.transform.position = GetCreatingPosition();
         resource.gameObject.SetActive(true);
         resource.Init(this);
+    }
+
+    private void Deliverd(Resource resource)
+    {
+        resource.Delivered -= Deliverd;
+        OnRelease(resource);
     }
 
     private Resource Create()

@@ -6,11 +6,11 @@ public class UnitStateMachine
     public UnitStateMachine(Unit unit)
     {
         _unit = unit;
-        SetState(new WaitingState());
+        SetState(new WaiteState());
     }
 
     public bool IsFree()
-        => _currentState is WaitingState;
+        => _currentState is WaiteState;
 
     public void Update()
     {

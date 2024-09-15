@@ -1,4 +1,4 @@
-public class WaitingState : IUnitState
+public class WaiteState : IUnitState
 {
     public void EnterState()
     {}

@@ -1,7 +1,7 @@
 using TMPro;
 using UnityEngine;
 
-public class ResourceUIManager : MonoBehaviour
+public class ResourceUIDisplay : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI _haveResources;
     [SerializeField] private Tower _tower;
@@ -18,6 +18,6 @@ public class ResourceUIManager : MonoBehaviour
 
     private void ChangeDeliveredResource(int count)
     {
-        _haveResources.text = $"Доставленные ресурсы {count}";
+        _haveResources.text = $"{count}";
     }
 }
