@@ -23,15 +23,7 @@ public class Scanner : MonoBehaviour
     {
         while (true)
         {
-            float currentRadius = 0f;
-
-            while (currentRadius < _maxRadius)
-            {
-                currentRadius += _speed * Time.deltaTime;
-                DetectResources(currentRadius);
-
-                yield return null;
-            }
+            DetectResources(_maxRadius);
 
             if (_findedResources.Count > 0)
                 Finded?.Invoke(_findedResources.Where(findedResource => findedResource.gameObject.activeSelf).ToList());

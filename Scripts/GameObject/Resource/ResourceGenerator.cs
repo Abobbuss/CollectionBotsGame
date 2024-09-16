@@ -1,6 +1,5 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.Pool;
 
 public class ResourceGenerator : MonoBehaviour
@@ -46,7 +45,8 @@ public class ResourceGenerator : MonoBehaviour
 
     private Vector3 GetCreatingPosition()
     {
-        float objectHeight = _prefab.GetComponent<Renderer>().bounds.size.y / 2;
+        Renderer renderer = _prefab.GetComponent<Renderer>() ?? throw new MissingComponentException("Prefab is missing a Renderer component.");
+        float objectHeight = renderer.bounds.size.y / 2;
         Bounds bounds = _zoneSpawn.bounds;
         Vector3 center = bounds.center;
         Vector3 size = bounds.size;
@@ -65,7 +65,6 @@ public class ResourceGenerator : MonoBehaviour
         resource.Delivered += Deliverd;
         resource.transform.position = GetCreatingPosition();
         resource.gameObject.SetActive(true);
-        resource.Init(this);
     }
 
     private void Deliverd(Resource resource)

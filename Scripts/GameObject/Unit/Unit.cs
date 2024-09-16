@@ -10,15 +10,20 @@ public class Unit : MonoBehaviour
     public bool IsFree => _machineState.IsFree();
     public Tower Tower => _tower;
 
+    private void Start()
+    {
+        _machineState = new UnitStateMachine(this);
+    }
+
+    private void Update()
+    {
+        _machineState.Update();
+    }
+
     public void DeliveredResource()
     {
         _tower.DelivereResource(_currentResource);
         _currentResource = null;
-    }
-
-    private void Start()
-    {
-        _machineState = new UnitStateMachine(this);
     }
 
     public void SetState(IUnitState state)
@@ -30,10 +35,5 @@ public class Unit : MonoBehaviour
     {
         _currentResource = resource;
         _machineState.SetState(new MoveToResourceState(this, resource));
-    }
-
-    private void Update()
-    {
-        _machineState.Update();
     }
 }
