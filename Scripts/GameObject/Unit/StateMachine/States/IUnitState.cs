@@ -1,6 +1,6 @@
 public interface IUnitState
 {
-    void EnterState();
-    void UpdateState();
-    void ExitState();
+    void Enter();
+    void Update();
+    void Exit();
 }

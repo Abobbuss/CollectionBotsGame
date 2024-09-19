@@ -10,10 +10,10 @@ public class TakeState : IUnitState
         Take();
     }
 
-    public void EnterState()
+    public void Enter()
     {}
 
-    public void ExitState()
+    public void Exit()
     {}
 
     public void Take()
@@ -21,7 +21,7 @@ public class TakeState : IUnitState
         _resource.transform.parent = _unit.transform;
     }
 
-    public void UpdateState()
+    public void Update()
     {
         _unit.SetState(new MoveToTowerState(_unit, _unit.Tower));
     }

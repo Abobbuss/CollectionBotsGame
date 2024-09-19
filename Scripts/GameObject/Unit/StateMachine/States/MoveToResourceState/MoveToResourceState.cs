@@ -12,13 +12,13 @@ public class MoveToResourceState : IUnitState
         _unit = unit;
     }
 
-    public void EnterState()
+    public void Enter()
     {}
 
-    public void ExitState()
+    public void Exit()
     {}
 
-    public void UpdateState()
+    public void Update()
     {
         MoverBase move = new MoverBase(_unit, _resource.transform.position);
         move.Update();

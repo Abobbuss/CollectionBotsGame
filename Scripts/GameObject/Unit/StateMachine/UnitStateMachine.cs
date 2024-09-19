@@ -14,13 +14,13 @@ public class UnitStateMachine
 
     public void Update()
     {
-        _currentState?.UpdateState();
+        _currentState?.Update();
     }
 
     public void SetState(IUnitState newState)
     {
-        _currentState?.ExitState();
+        _currentState?.Exit();
         _currentState = newState;
-        _currentState.EnterState();
+        _currentState.Enter();
     }
 }

@@ -1,11 +1,11 @@
 public class WaiteState : IUnitState
 {
-    public void EnterState()
+    public void Enter()
     {}
 
-    public void ExitState()
+    public void Exit()
     {}
 
-    public void UpdateState()
+    public void Update()
     {}
 }

@@ -12,15 +12,15 @@ public class MoveToTowerState : IUnitState
         _tower = tower;
     }
 
-    public void EnterState()
+    public void Enter()
     {}
 
-    public void ExitState()
+    public void Exit()
     {
         _unit.DeliveredResource();
     }
 
-    public void UpdateState()
+    public void Update()
     {
         MoverBase move = new MoverBase(_unit, _tower.transform.position);
         move.Update();
