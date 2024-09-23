@@ -11,7 +11,7 @@ public class TakeState : IUnitState
     }
 
     public void Enter()
-    {}
+    { }
 
     public void Exit()
     {}

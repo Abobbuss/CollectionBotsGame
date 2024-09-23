@@ -6,9 +6,9 @@ public class ResourceGenerator : MonoBehaviour
 {
     [SerializeField] private Resource _prefab;
     [SerializeField] private Collider _zoneSpawn;
+    [SerializeField] private float _timeCreate = 8f;
 
     private ObjectPool<Resource> _pool;
-    private float _timeCreate = 1.5f;
 
     private void Awake()
     {

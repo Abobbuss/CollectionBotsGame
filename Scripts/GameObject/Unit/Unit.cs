@@ -23,6 +23,7 @@ public class Unit : MonoBehaviour
     public void DeliveredResource()
     {
         _tower.DelivereResource(_currentResource);
+        _currentResource.IsDelivering = false;
         _currentResource = null;
     }
 

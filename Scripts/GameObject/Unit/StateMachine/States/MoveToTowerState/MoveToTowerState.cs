@@ -4,7 +4,7 @@ public class MoveToTowerState : IUnitState
 {
     private Unit _unit;
     private Tower _tower;
-    private float _distance = 0.55f;
+    private float _distance = 0.75f;
 
     public MoveToTowerState(Unit unit, Tower tower)
     {

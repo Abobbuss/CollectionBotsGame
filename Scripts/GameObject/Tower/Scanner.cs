@@ -7,7 +7,7 @@ using UnityEngine.Events;
 public class Scanner : MonoBehaviour
 {
     [SerializeField] private float _speed;
-    [SerializeField] private float _resetDelay = 5f;
+    [SerializeField] private float _resetDelay = 3f;
     [SerializeField] private int _maxRadius = 50;
 
     private List<Resource> _findedResources = new List<Resource>();

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -17,6 +18,11 @@ public class Tower : MonoBehaviour
     {
         _findedResources = new List<Resource>();
         _deliverdResources = new List<Resource>();
+    }
+
+    private void Update()
+    {
+        AssignUnitToResource();
     }
 
     private void OnEnable()
@@ -40,22 +46,28 @@ public class Tower : MonoBehaviour
     {
         foreach (Resource resource in resources)
         {
-            _findedResources.Add(resource);
+            if (!_findedResources.Contains(resource) && resource.IsDelivering == false)
+            {
+                _findedResources.Add(resource);
+                resource.IsDelivering = true;
+            }
         }
-
-        AssignUnitToResource();
+        
     }
 
     private void AssignUnitToResource()
     {
         foreach (Resource resource in _findedResources.ToList())
         {
-            Unit freeUnit = _units.FirstOrDefault(unit => unit.IsFree);
+            Unit closestUnit = _units
+                .Where(unit => unit.IsFree)
+                .OrderBy(unit => Vector3.Distance(unit.transform.position, resource.transform.position))
+                .FirstOrDefault();
 
-            if (freeUnit == null)
+            if (closestUnit == null)
                 break;
 
-            freeUnit.HasTarge(resource);
+            closestUnit.HasTarge(resource);
             _findedResources.Remove(resource); 
         }
     }
