@@ -1,11 +1,9 @@
 public class UnitStateMachine
 {
     private IUnitState _currentState;
-    private Unit _unit;
 
-    public UnitStateMachine(Unit unit)
+    public UnitStateMachine()
     {
-        _unit = unit;
         SetState(new WaiteState());
     }
 

@@ -23,7 +23,12 @@ public class MoveToResourceState : IUnitState
         MoverBase move = new MoverBase(_unit, _resource.transform.position);
         move.Update();
 
-        if (Vector3.Distance(_unit.transform.position, _resource.transform.position) < _distance)
+        float distanceSqr = (_unit.transform.position - _resource.transform.position).sqrMagnitude;
+        float distanceThresholdSqr = _distance * _distance;
+
+        if (distanceSqr < distanceThresholdSqr)
+        {
             _unit.SetState(new TakeState(_unit, _resource));
+        }
     }
 }

@@ -15,7 +15,7 @@ public class ResourceGenerator : MonoBehaviour
         _pool = new ObjectPool<Resource>(
             createFunc: Create,
             actionOnGet: OnGet,
-            actionOnRelease: obj => OnRelease(obj),
+            actionOnRelease: OnRelease,
             actionOnDestroy: obj => Destroy(obj.gameObject)
             );
     }
@@ -46,31 +46,32 @@ public class ResourceGenerator : MonoBehaviour
     private Vector3 GetCreatingPosition()
     {
         Renderer renderer = _prefab.GetComponent<Renderer>() ?? throw new MissingComponentException("Prefab is missing a Renderer component.");
-        float objectHeight = renderer.bounds.size.y / 2;
-        Bounds bounds = _zoneSpawn.bounds;
-        Vector3 center = bounds.center;
-        Vector3 size = bounds.size;
+        
+        float halfSizeFactor = 0.5f;
+        float halfObjectHeight = renderer.bounds.size.y * halfSizeFactor;
 
-        Vector3 randomPosition = new Vector3(
-            Random.Range(center.x - size.x / 2, center.x + size.x / 2),
-            objectHeight,
-            Random.Range(center.z - size.z / 2, center.z + size.z / 2)
-        );
-
-        return randomPosition;
+        Bounds spawnBounds = _zoneSpawn.bounds;
+        Vector3 boundsCenter = spawnBounds.center;
+        Vector3 boundsSize = spawnBounds.size;
+        
+        float randomXPosition = Random.Range(boundsCenter.x - boundsSize.x * halfSizeFactor, boundsCenter.x + boundsSize.x * halfSizeFactor);
+        float randomZPosition = Random.Range(boundsCenter.z - boundsSize.z * halfSizeFactor, boundsCenter.z + boundsSize.z * halfSizeFactor);
+        
+        return new Vector3(randomXPosition, halfObjectHeight, randomZPosition);
     }
 
     private void OnGet(Resource resource)
     {
         resource.Delivered += Deliverd;
         resource.transform.position = GetCreatingPosition();
+        resource.transform.rotation = Quaternion.identity;
         resource.gameObject.SetActive(true);
     }
 
     private void Deliverd(Resource resource)
     {
         resource.Delivered -= Deliverd;
-        OnRelease(resource);
+        _pool.Release(resource);
     }
 
     private Resource Create()

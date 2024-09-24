@@ -46,13 +46,11 @@ public class Tower : MonoBehaviour
     {
         foreach (Resource resource in resources)
         {
-            if (!_findedResources.Contains(resource) && resource.IsDelivering == false)
+            if (!_findedResources.Contains(resource))
             {
                 _findedResources.Add(resource);
-                resource.IsDelivering = true;
             }
         }
-        
     }
 
     private void AssignUnitToResource()
@@ -67,7 +65,7 @@ public class Tower : MonoBehaviour
             if (closestUnit == null)
                 break;
 
-            closestUnit.HasTarge(resource);
+            closestUnit.SetTargetResource(resource);
             _findedResources.Remove(resource); 
         }
     }

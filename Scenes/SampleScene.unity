@@ -1458,6 +1458,9 @@ MonoBehaviour:
   _speed: 15
   _resetDelay: 5
   _maxRadius: 43
+  _resourceLayerMask:
+    serializedVersion: 2
+    m_Bits: 8
 --- !u!1 &2086927934
 GameObject:
   m_ObjectHideFlags: 0

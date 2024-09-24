@@ -7,11 +7,12 @@ public class TakeState : IUnitState
     {
         _unit = unit;
         _resource = resource;
-        Take();
     }
 
     public void Enter()
-    { }
+    {
+        Take();
+    }
 
     public void Exit()
     {}

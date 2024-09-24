@@ -4,37 +4,36 @@ public class Unit : MonoBehaviour
 {
     [SerializeField] private Tower _tower;
 
-    private UnitStateMachine _machineState;
+    private UnitStateMachine _stateMachineState;
     private Resource _currentResource;
 
-    public bool IsFree => _machineState.IsFree();
+    public bool IsFree => _stateMachineState.IsFree();
     public Tower Tower => _tower;
 
     private void Start()
     {
-        _machineState = new UnitStateMachine(this);
+        _stateMachineState = new UnitStateMachine();
     }
 
     private void Update()
     {
-        _machineState.Update();
+        _stateMachineState.Update();
     }
 
     public void DeliveredResource()
     {
         _tower.DelivereResource(_currentResource);
-        _currentResource.IsDelivering = false;
         _currentResource = null;
     }
 
     public void SetState(IUnitState state)
     {
-        _machineState.SetState(state);
+        _stateMachineState.SetState(state);
     }
 
-    public void HasTarge(Resource resource)
+    public void SetTargetResource(Resource resource)
     {
         _currentResource = resource;
-        _machineState.SetState(new MoveToResourceState(this, resource));
+        _stateMachineState.SetState(new MoveToResourceState(this, resource));
     }
 }

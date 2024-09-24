@@ -25,7 +25,10 @@ public class MoveToTowerState : IUnitState
         MoverBase move = new MoverBase(_unit, _tower.transform.position);
         move.Update();
 
-        if (Vector3.Distance(_unit.transform.position, _tower.transform.position) < _distance)
+        float distanceSqr = (_unit.transform.position - _tower.transform.position).sqrMagnitude;
+        float distanceThresholdSqr = _distance * _distance;
+
+        if (distanceSqr < distanceThresholdSqr)
         {
             _unit.SetState(new WaiteState());
         }
