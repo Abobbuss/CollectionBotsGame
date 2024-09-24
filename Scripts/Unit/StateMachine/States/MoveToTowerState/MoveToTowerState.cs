@@ -5,6 +5,7 @@ public class MoveToTowerState : IUnitState
     private Unit _unit;
     private Tower _tower;
     private float _distance = 0.75f;
+    private MoverBase _move;
 
     public MoveToTowerState(Unit unit, Tower tower)
     {
@@ -13,7 +14,9 @@ public class MoveToTowerState : IUnitState
     }
 
     public void Enter()
-    {}
+    {
+        _move = new MoverBase(_unit, _tower.transform.position);
+    }
 
     public void Exit()
     {
@@ -22,8 +25,7 @@ public class MoveToTowerState : IUnitState
 
     public void Update()
     {
-        MoverBase move = new MoverBase(_unit, _tower.transform.position);
-        move.Update();
+        _move.Update();
 
         float distanceSqr = (_unit.transform.position - _tower.transform.position).sqrMagnitude;
         float distanceThresholdSqr = _distance * _distance;

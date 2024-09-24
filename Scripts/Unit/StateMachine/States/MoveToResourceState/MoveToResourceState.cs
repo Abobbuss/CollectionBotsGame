@@ -5,6 +5,7 @@ public class MoveToResourceState : IUnitState
     private Unit _unit;
     private Resource _resource;
     private float _distance = 0.3f;
+    private MoverBase _move;
 
     public MoveToResourceState(Unit unit, Resource target) 
     {
@@ -13,15 +14,16 @@ public class MoveToResourceState : IUnitState
     }
 
     public void Enter()
-    {}
+    {
+        _move = new MoverBase(_unit, _resource.transform.position);
+    }
 
     public void Exit()
     {}
 
     public void Update()
     {
-        MoverBase move = new MoverBase(_unit, _resource.transform.position);
-        move.Update();
+        _move.Update();
 
         float distanceSqr = (_unit.transform.position - _resource.transform.position).sqrMagnitude;
         float distanceThresholdSqr = _distance * _distance;
