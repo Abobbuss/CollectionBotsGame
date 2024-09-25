@@ -62,15 +62,15 @@ public class ResourceGenerator : MonoBehaviour
 
     private void OnGet(Resource resource)
     {
-        resource.Delivered += Deliverd;
+        resource.OnReleased += HandleResourceReleased;
         resource.transform.position = GetCreatingPosition();
         resource.transform.rotation = Quaternion.identity;
         resource.gameObject.SetActive(true);
     }
 
-    private void Deliverd(Resource resource)
+    private void HandleResourceReleased(Resource resource)
     {
-        resource.Delivered -= Deliverd;
+        resource.OnReleased -= HandleResourceReleased;
         _pool.Release(resource);
     }
 

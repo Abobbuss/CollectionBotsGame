@@ -11,19 +11,9 @@ public class Tower : MonoBehaviour
 
     private List<Resource> _findedResources;
     private List<Resource> _deliverdResources;
+    private HashSet<int> _foundResourceIds = new HashSet<int>();
 
     public event UnityAction<int> ChangedCountDiscoverdResources;
-
-    private void Start()
-    {
-        _findedResources = new List<Resource>();
-        _deliverdResources = new List<Resource>();
-    }
-
-    private void Update()
-    {
-        AssignUnitToResource();
-    }
 
     private void OnEnable()
     {
@@ -33,6 +23,17 @@ public class Tower : MonoBehaviour
     private void OnDisable()
     {
         _scanner.Finded -= OnFindResource;
+    }
+    
+    private void Start()
+    {
+        _findedResources = new List<Resource>();
+        _deliverdResources = new List<Resource>();
+    }
+
+    private void Update()
+    {
+        AssignUnitToResource();
     }
 
     public void DelivereResource(Resource resource)
@@ -46,9 +47,12 @@ public class Tower : MonoBehaviour
     {
         foreach (Resource resource in resources)
         {
-            if (!_findedResources.Contains(resource))
+            if (_foundResourceIds.Contains(resource.GetInstanceID()) == false)
             {
+                int resourceId = resource.GetInstanceID();
+                _foundResourceIds.Add(resourceId);
                 _findedResources.Add(resource);
+                resource.OnReleased += ResourceOnOnReleased;
             }
         }
     }
@@ -59,7 +63,7 @@ public class Tower : MonoBehaviour
         {
             Unit closestUnit = _units
                 .Where(unit => unit.IsFree)
-                .OrderBy(unit => Vector3.Distance(unit.transform.position, resource.transform.position))
+                .OrderBy(unit => (unit.transform.position - resource.transform.position).sqrMagnitude)
                 .FirstOrDefault();
 
             if (closestUnit == null)
@@ -68,5 +72,11 @@ public class Tower : MonoBehaviour
             closestUnit.SetTargetResource(resource);
             _findedResources.Remove(resource); 
         }
+    }
+    
+    private void ResourceOnOnReleased(Resource resource)
+    {
+        resource.OnReleased -= ResourceOnOnReleased;
+        _foundResourceIds.Remove(resource.GetInstanceID());
     }
 }

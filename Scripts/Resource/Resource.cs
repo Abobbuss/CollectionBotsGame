@@ -3,10 +3,10 @@ using UnityEngine;
 
 public class Resource : MonoBehaviour
 {
-    public event Action<Resource> Delivered;
+    public event Action<Resource> OnReleased;
     
     public void Release()
     {
-        Delivered?.Invoke(this);
+        OnReleased?.Invoke(this);
     }
 }
