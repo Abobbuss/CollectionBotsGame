@@ -4,7 +4,6 @@ public class MoveToResourceState : IUnitState
 {
     private Unit _unit;
     private Resource _resource;
-    private float _distance = 0.3f;
     private MoverBase _move;
 
     public MoveToResourceState(Unit unit, Resource target) 
@@ -24,13 +23,9 @@ public class MoveToResourceState : IUnitState
     public void Update()
     {
         _move.Update();
-
-        float distanceSqr = (_unit.transform.position - _resource.transform.position).sqrMagnitude;
-        float distanceThresholdSqr = _distance * _distance;
-
-        if (distanceSqr < distanceThresholdSqr)
-        {
+        float distance = 0.3f;
+         
+        if (_move.IsCathTarget(distance))
             _unit.SetState(new TakeState(_unit, _resource));
-        }
     }
 }

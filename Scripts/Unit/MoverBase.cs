@@ -2,8 +2,7 @@ using UnityEngine;
 
 public class MoverBase
 {
-    [SerializeField] private float _speed = 1.5f;
-
+    private float _speed = 1.5f;
     private Unit _unit;
     private Vector3 _targetPosition;
 
@@ -17,5 +16,13 @@ public class MoverBase
     {
         float step = _speed * Time.deltaTime;
         _unit.transform.position = Vector3.MoveTowards(_unit.transform.position, _targetPosition, step);
+    }
+
+    public bool IsCathTarget(float distance = 0.75f)
+    {
+        float distanceSqr = (_unit.transform.position - _targetPosition).sqrMagnitude;
+        float distanceThresholdSqr = distance * distance;
+
+        return distanceSqr < distanceThresholdSqr;
     }
 }

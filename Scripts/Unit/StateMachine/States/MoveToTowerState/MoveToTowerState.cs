@@ -1,10 +1,8 @@
-using UnityEngine;
 
 public class MoveToTowerState : IUnitState
 {
     private Unit _unit;
     private Tower _tower;
-    private float _distance = 0.75f;
     private MoverBase _move;
 
     public MoveToTowerState(Unit unit, Tower tower)
@@ -26,13 +24,8 @@ public class MoveToTowerState : IUnitState
     public void Update()
     {
         _move.Update();
-
-        float distanceSqr = (_unit.transform.position - _tower.transform.position).sqrMagnitude;
-        float distanceThresholdSqr = _distance * _distance;
-
-        if (distanceSqr < distanceThresholdSqr)
-        {
+        
+        if(_move.IsCathTarget())
             _unit.SetState(new WaiteState());
-        }
     }
 }

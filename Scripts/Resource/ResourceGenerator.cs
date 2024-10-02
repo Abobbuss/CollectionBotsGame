@@ -6,7 +6,7 @@ public class ResourceGenerator : MonoBehaviour
 {
     [SerializeField] private Resource _prefab;
     [SerializeField] private Collider _zoneSpawn;
-    [SerializeField] private float _timeCreate = 8f;
+    [SerializeField] private float _timeCreate = 2f;
 
     private ObjectPool<Resource> _pool;
 
@@ -66,6 +66,7 @@ public class ResourceGenerator : MonoBehaviour
         resource.transform.position = GetCreatingPosition();
         resource.transform.rotation = Quaternion.identity;
         resource.gameObject.SetActive(true);
+        resource.Finded(false);
     }
 
     private void HandleResourceReleased(Resource resource)
