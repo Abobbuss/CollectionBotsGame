@@ -101,7 +101,7 @@ public class Tower : MonoBehaviour
                 int resourceId = resource.GetInstanceID();
                 _foundResourceIds.Add(resourceId);
                 _findedResources.Add(resource);
-                resource.OnReleased += ResourceOnOnReleased;
+                resource.Released += ResourceReleased;
             }
         }
     }
@@ -121,15 +121,15 @@ public class Tower : MonoBehaviour
             if (closestUnit == null)
                 break;
             
-            resource.Finded(true);
+            resource.Find();
             closestUnit.SetTargetResource(resource);
             _findedResources.Remove(resource); 
         }
     }
     
-    private void ResourceOnOnReleased(Resource resource)
+    private void ResourceReleased(Resource resource)
     {
-        resource.OnReleased -= ResourceOnOnReleased;
+        resource.Released -= ResourceReleased;
         _foundResourceIds.Remove(resource.GetInstanceID());
     }
 

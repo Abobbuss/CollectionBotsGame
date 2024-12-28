@@ -10,7 +10,7 @@ public class Scanner : MonoBehaviour
     [SerializeField] private float _resetDelay = 3f;
     [SerializeField] private int _maxRadius = 70;
     [SerializeField] private LayerMask _resourceLayerMask;
-
+    
     public event UnityAction<List<Resource>> Finded;
 
     private void Start()

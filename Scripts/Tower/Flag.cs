@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 [RequireComponent(typeof(Renderer))]
@@ -7,8 +6,14 @@ public class Flag : MonoBehaviour
     private bool _isActive;
     private Camera _mainCamera;
     private LayerMask _groundLayer;
+    private Renderer _renderer;
     
-    public float Height => GetComponent<Renderer>().bounds.size.y / 2;
+    public float Height => _renderer.bounds.size.y / 2;
+
+    private void Awake()
+    {
+        _renderer = GetComponent<Renderer>();
+    }
 
     public void Initialize(Camera camera, LayerMask groundLayer)
     {
@@ -16,7 +21,7 @@ public class Flag : MonoBehaviour
         _groundLayer = groundLayer;
     }
 
-    public void ActivateFlag(Vector3 initialPosition)
+    public void Activate(Vector3 initialPosition)
     {
         gameObject.SetActive(true);
         PlaceFlag(initialPosition);

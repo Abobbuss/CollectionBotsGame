@@ -3,16 +3,18 @@ using UnityEngine;
 
 public class Resource : MonoBehaviour
 {
-    private bool _isDeatected;
-    public bool IsDeatected => _isDeatected;
+    public event Action<Resource> Released;
     
-    public event Action<Resource> OnReleased;
-    
+    public bool IsDeatected { get; private set; }
+
     public void Release()
     {
-        OnReleased?.Invoke(this);
+        Released?.Invoke(this);
     }
     
-    public void Finded(bool isFinded)
-        => _isDeatected = isFinded;
+    public void Find()
+        => IsDeatected = true;
+    
+    public void UnFind()
+        => IsDeatected = false;
 }

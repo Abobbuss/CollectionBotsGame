@@ -31,9 +31,8 @@ public class Unit : MonoBehaviour
         Tower towerObject = Instantiate(_towerPrefab);
         towerObject.transform.position = position;
         
-        Tower tower = towerObject.GetComponent<Tower>();
-        Initialize(tower);
-        tower.AddUnit(this);
+        Initialize(towerObject);
+        towerObject.AddUnit(this);
         SetState(new WaiteState());
     }
     

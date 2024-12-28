@@ -22,7 +22,7 @@ public class ResourceGenerator : MonoBehaviour
 
     private void Start()
     {
-        StartCoroutine(StartGenerate());
+        StartCoroutine(GenerateResourses());
     }
 
     public void OnRelease(Resource resource)
@@ -31,7 +31,7 @@ public class ResourceGenerator : MonoBehaviour
         resource.gameObject.SetActive(false);
     }
 
-    private IEnumerator StartGenerate()
+    private IEnumerator GenerateResourses()
     {
         var waitTime = new WaitForSeconds(_timeCreate);
 
@@ -62,16 +62,16 @@ public class ResourceGenerator : MonoBehaviour
 
     private void OnGet(Resource resource)
     {
-        resource.OnReleased += HandleResourceReleased;
+        resource.Released += HandleResourceReleased;
         resource.transform.position = GetCreatingPosition();
         resource.transform.rotation = Quaternion.identity;
         resource.gameObject.SetActive(true);
-        resource.Finded(false);
+        resource.UnFind();
     }
 
     private void HandleResourceReleased(Resource resource)
     {
-        resource.OnReleased -= HandleResourceReleased;
+        resource.Released -= HandleResourceReleased;
         _pool.Release(resource);
     }
 

@@ -81,7 +81,7 @@ public class TowerFlagManager : MonoBehaviour, IClickable
         {
             Vector3 adjustedPosition = clickPosition + new Vector3(0, _flag.Height, 0);
 
-            _flag.ActivateFlag(adjustedPosition);
+            _flag.Activate(adjustedPosition);
             _isFlagActive = true;
         }
     }
